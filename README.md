@@ -87,12 +87,7 @@ So grab the ones you are interested in get the length then divide that both the 
 ```{r}
 both = as.data.frame(rbind(mccsc, rbbcsc))
 dim(both)
-bothQuan = na.omit(both)
-bothQuan = as.data.frame(both)
-dim(both)
-both = apply(both,2, function(x){ifelse(x == "NA", NA, x)})
-both = na.omit(both)
-both = as.data.frame(both)
+sum(is.na(both))
 
 bothN = nrow(both)
 
@@ -101,33 +96,19 @@ bothMale = as.data.frame(both[both$gender == "Male",])
 bothMaleN = nrow(bothMale)
 bothMalePerc = bothMaleN / bothN; bothMalePerc 
 
-bothFemalePerc = 1-(bothMalePerc+bothOtherGIPerc)
-
 bothOtherGI = as.data.frame(both[both$gender == "Other gender identity (please specify)",])
 bothOtherGIN = nrow(bothOtherGI)
 bothOtherGIPerc = bothOtherGIN / bothN; bothOtherGIPerc
 
-sum(bothFemalePerc, bothMalePerc, bothOtherGIPerc)
+bothFemalePerc = 1-(bothMalePerc+bothOtherGIPerc)
 
+sum(bothFemalePerc, bothMalePerc, bothOtherGIPerc)
 ```
 Now we are getting ethnicity white, black, hispanic, and other
 Make things add up to one.
 ```{r}
-both = as.data.frame(rbind(mccsc, rbbcsc))
-dim(both)
-both = na.omit(both)
-both = as.data.frame(both)
-dim(both)
-both = apply(both,2, function(x){ifelse(x == "NA", NA, x)})
-both = na.omit(both)
-write.csv(both, "both.csv", row.names = FALSE)
-both =read.csv("both.csv", header = TRUE)
-both
-both = na.omit(both)
-both = as.data.frame(both)
-bothN = nrow(both)
-
 ## Now white people
+write.csv(both, "both.csv", row.names = FALSE)
 bothWhite = as.data.frame(both[both$eth == "White",])
 bothWhiteN = nrow(bothWhite)
 bothWhitePerc = bothWhiteN / bothN; bothWhitePerc 
@@ -168,22 +149,61 @@ bothOther = as.data.frame(both[both$eth == "Some other race, ethnicity, or origi
 bothOtherN = nrow(bothOther)
 bothOtherPerc = bothOtherN / bothN; bothOtherPerc
 
-sum(bothWhitePerc, bothHisPerc, bothBlackPerc, bothAsianPerc, bothAIPerc, bothMEPerc, bothNHPerc, bothOtherPerc)
 
+bothTotal = sum(bothWhitePerc, bothHisPerc, bothBlackPerc, bothAsianPerc, bothAIPerc, bothMEPerc, bothNHPerc, bothOtherPerc)
+
+bothMulti = 1-bothTotal
 
 ```
 Now we need to get job type
 ```{r}
-both = as.data.frame(rbind(mccsc, rbbcsc))
-dim(both)
-bothQuan = na.omit(both)
-bothQuan = as.data.frame(both)
-dim(both)
-both = apply(both,2, function(x){ifelse(x == "NA", NA, x)})
-both = na.omit(both)
-both = as.data.frame(both)
-bothN = nrow(both)
-
 # Now primary teachers
+bothPST = as.data.frame(both[both$job == "Primary school teacher",])
+bothPSTN = nrow(bothPST)
+bothPSTPerc = bothPSTN / bothN; bothPSTPerc 
+
+# Now Secondary school teacher
+bothSST = as.data.frame(both[both$job == "Secondary school teacher",])
+bothSSTN = nrow(bothSST)
+bothSSTPerc = bothSSTN / bothN; bothSSTPerc 
+
+# Now School Social Worker
+bothSSW = as.data.frame(both[both$job == "School Social Worker",])
+bothSSWN = nrow(bothSSW)
+bothSSWPerc = bothSSWN / bothN; bothSSWPerc 
+
+# Principal
+bothP = as.data.frame(both[both$job == "Principal",])
+bothPN = nrow(bothP)
+bothPPerc = bothPN / bothN; bothPPerc
+
+# School Psychologist
+bothSP = as.data.frame(both[both$job == "School Psychologist",])
+bothSPN = nrow(bothSP)
+bothSPPerc = bothSPN / bothN; bothSPPerc
+
+# School Counselor
+bothSC = as.data.frame(both[both$job == "School Counselor",])
+bothSCN = nrow(bothSC)
+bothSCPerc = bothSCN / bothN; bothSCPerc
+
+# Special Education teacher
+bothSET = as.data.frame(both[both$job == "Special Education teacher",])
+bothSETN = nrow(bothSET)
+bothSETPerc = bothSETN / bothN; bothSETPerc
+
+# Administrator 
+bothA = as.data.frame(both[both$job == "Administrator",])
+bothAN = nrow(bothA)
+bothAPerc = bothAN / bothN; bothAPerc
+
+total = sum(bothPSTPerc, bothSSTPerc, bothSSWPerc, bothPPerc, bothSPPerc, bothSCPerc, bothSETPerc, bothAPerc)
+
+bothOther = 1-total
+
+
+
+
+
 ```
 
