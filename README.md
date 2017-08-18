@@ -197,11 +197,27 @@ bothA = as.data.frame(both[both$job == "Administrator",])
 bothAN = nrow(bothA)
 bothAPerc = bothAN / bothN; bothAPerc
 
-total = sum(bothPSTPerc, bothSSTPerc, bothSSWPerc, bothPPerc, bothSPPerc, bothSCPerc, bothSETPerc, bothAPerc)
+# Support Staff 
+bothSS = as.data.frame(both[both$job == "Support Staff",])
+bothSSN = nrow(bothSS)
+bothSSPerc = bothSSN / bothN; bothSSPerc
 
-bothOther = 1-total
+# Pre-K teacher 
+bothPK = as.data.frame(both[both$job == "Pre-K teacher",])
+bothPKN = nrow(bothPK)
+bothPKPerc = bothPKN / bothN; bothPKPerc
+
+# Other (please specify)
+bothO = as.data.frame(both[both$job == "Other (please specify)",])
+bothON = nrow(bothO)
+bothOPerc = bothON / bothN; bothOPerc
+
+total = sum(bothPSTPerc, bothSSTPerc, bothSSWPerc, bothPPerc, bothSPPerc, bothSCPerc, bothSETPerc, bothAPerc, bothSSPerc, bothPKPerc,bothOPerc)
+
+bothMulti = 1-total
 
 
+1-.26-.39-.08-.08
 
 
 
