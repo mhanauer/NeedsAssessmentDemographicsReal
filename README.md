@@ -50,8 +50,8 @@ head(rbbcsc)
 write.csv(rbbcsc, "rbbcsc.csv", row.names = FALSE)
 rbbcsc = as.data.frame(read.csv("rbbcsc.csv", header = TRUE, na.strings = ""))
 dim(rbbcsc)
-both = apply(both,2, function(x){ifelse(x == "NA", NA, x)})
-rbbcsc = as.data.frame(na.omit(rbbcsc))
+
+
 
 dim(rbbcsc)
 write.csv(rbbcsc, "rbbcsc.csv", row.names = FALSE)
@@ -73,8 +73,15 @@ head(mccsc)
 colnames(mccsc) = c("SELQuant1", "SELQuant2", "SELQuant3", "SELQuant4", "SELQuant5", "SELQuant6", "eth", "gender", "edu", "job") 
 mccsc = mccsc[-c(1:11),]
 write.csv(mccsc, "mccsc.csv", row.names = FALSE)
-both = apply(both,2, function(x){ifelse(x == "NA", NA, x)})
 mccsc = as.data.frame(read.csv("mccsc.csv", header = TRUE, na.strings = ""))
+
+## RBBCSC had a response of 85% so take what you have times 15% and add that to get the full RBBCSC sample.  I am counting all the NA's expect for the ones that I filled out early as tests.  I believe we had a 40% response rate for MCCSC
+rbbcscFullSample = round(nrow(rbbcsc) + .15*nrow(rbbcsc),0)
+mccscFullSample = 474+ 474*.6
+responseRate = 474/ (rbbcscFullSample +mccscFullSample); responseRate
+
+
+
 mccsc = as.data.frame(na.omit(mccsc))
 dim(mccsc)
 sum(is.na(mccsc))
@@ -86,8 +93,12 @@ Now MCCSC SEL
 So grab the ones you are interested in get the length then divide that both the total to get the percentage for the category that you are interested in.
 ```{r}
 both = as.data.frame(rbind(mccsc, rbbcsc))
+dim(rbbcsc)
 dim(both)
 sum(is.na(both))
+both = na.omit(both)
+dim(both)
+# Here we are getting the sample size, which gets rid anyone who did not respond to any of the quantitative questions, gender, ethincity, job, or education level
 
 bothN = nrow(both)
 
